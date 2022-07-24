@@ -45,10 +45,16 @@ class Authors extends BaseController
         exit();
     }
 
-    public function details($id = null)
+    public function details($id)
     {
         $authorsModel = new AuthorsModel();
         $author = $authorsModel->find($id);
+        if (!$author) {
+            $errorData = [
+                'error' => "El Autor " . $id . " no ha sido encontrado"
+            ];
+            return view('authors/index', $errorData);
+        }
 
         // Cantidad de libros que ha escrito el autor
         $db = \Config\Database::connect();
@@ -89,7 +95,7 @@ class Authors extends BaseController
         return $this->response->redirect(site_url('/authors'));
     }
 
-    public function delete($id=null)
+    public function delete($id)
     {
         $authorsModel = new AuthorsModel();
         $author = $authorsModel->find($id);

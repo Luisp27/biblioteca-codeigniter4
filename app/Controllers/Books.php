@@ -42,10 +42,16 @@ class Books extends BaseController
         exit();
     }
 
-    public function details($id = null)
+    public function details($id)
     {
         $booksModel = new BooksModel();
         $book = $booksModel->find($id);
+        if (!$book) {
+            $errorData = [
+                'error' => "El libro " . $id . " no ha sido encontrado"
+            ];
+            return view('home/index', $errorData);
+        }
 
         // Join con la tabla de autores para obtener el nombre del autor que ha escrito el libro
         $db = \Config\Database::connect();
@@ -118,10 +124,10 @@ class Books extends BaseController
         $booksAuthorsModel = new BooksAuthorModel();
         $book = $booksModel->find($id);
         if (!$book) {
-            $erroData = [
+            $errorData = [
                 'error' => "El libro " . $id . " no ha sido encontrado"
             ];
-            return view('home/index', $erroData);
+            return view('home/index', $errorData);
         }
         $booksModel->where('id', $id)->delete();
         // eliminamos tambien la relacion entre las tablas

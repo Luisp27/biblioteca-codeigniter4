@@ -4,6 +4,13 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
+            <?php
+            if ($error) {
+                echo '<div class="alert alert-danger" role="alert">' .
+                    $error
+                    . '</div>';
+            }
+            ?>
             <h1>Lista de libros</h1>
             <a href="<?= site_url('books/create') ?>" class="btn btn-primary">Agregar libro</a>
             <table id="book-table" class="table table-bordered table-striped table-hover">

@@ -107,15 +107,20 @@ class Books extends BaseController
                 'book_id' => $bookModelInsertedId
             ];
             $booksAuthor->insert($data);
-           
         }
     }
 
-    public function delete($id=null)
+    public function delete($id)
     {
-       $booksAuthor = new BooksModel();
-       $booksAuthor->where('id', $id)->delete();
-
-       return $this->response->redirect(site_url(''));
-   }
+        $booksModel = new BooksModel();
+        $book = $booksModel->find($id);
+        if (!$book) {
+            $erroData = [
+                'error' => "El libro " . $id . " no ha sido encontrado"
+            ];
+            return view('home/index', $erroData);
+        }
+        $book->delete();
+        return $this->response->redirect(site_url(''));
+    }
 }

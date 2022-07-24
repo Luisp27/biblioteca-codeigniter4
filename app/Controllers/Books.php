@@ -113,6 +113,7 @@ class Books extends BaseController
     public function delete($id)
     {
         $booksModel = new BooksModel();
+        $booksAuthorsModel = new BooksAuthorModel();
         $book = $booksModel->find($id);
         if (!$book) {
             $erroData = [
@@ -120,7 +121,9 @@ class Books extends BaseController
             ];
             return view('home/index', $erroData);
         }
-        $book->delete();
+        $booksModel->where('id', $id)->delete();
+        // eliminamos tambien la relacion entre las tablas
+        $booksAuthorsModel->where('id', $id)->delete();
         return $this->response->redirect(site_url(''));
     }
 }

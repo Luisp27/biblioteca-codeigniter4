@@ -33,6 +33,10 @@ CREATE TABLE books_authors (
 	updated_at DATE NOT NULL,
 	deleted_at DATE NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (book_id) REFERENCES books(id),
-    FOREIGN KEY (author_id) REFERENCES authors(id)
+    FOREIGN KEY (book_id) 
+		REFERENCES books(id) 
+		ON DELETE CASCADE,
+    FOREIGN KEY (author_id) 
+		REFERENCES authors(id) 
+        ON DELETE CASCADE
 );

@@ -15,6 +15,7 @@ class Home extends BaseController
         // Pasar los libros a la vista
         $data = [
             'books' => $books,
+            'error' => null
         ];
         return view('home\index', $data);
     }

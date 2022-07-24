@@ -4,6 +4,13 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
+            <?php
+            if ($error) {
+                echo '<div class="alert alert-danger" role="alert">' .
+                    $error
+                    . '</div>';
+            }
+            ?>
             <h1>Lista de autores</h1>
             <a href="<?= site_url('authors/create') ?>" class="btn btn-primary">Agregar autor</a>
             <table id="author-table" class="table table-bordered table-striped table-hover">

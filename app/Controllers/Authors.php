@@ -8,7 +8,10 @@ class Authors extends BaseController
 {
     public function index()
     {
-        return view('authors/index');
+        $data = [
+            'error' => null
+        ];
+        return view('authors/index', $data);
     }
 
     public function authors_table()
@@ -83,12 +86,19 @@ class Authors extends BaseController
         ];
         $authorModel->insert($data);
 
-        return $this->response->redirect(site_url('authors/index'));
+        return $this->response->redirect(site_url('/authors'));
     }
 
     public function delete($id=null)
     {
         $authorsModel = new AuthorsModel();
+        $author = $authorsModel->find($id);
+        if (!$author) {
+            $erroData = [
+                'error' => "El Autor " . $id . " no ha sido encontrado"
+            ];
+            return view('authors/index', $erroData);
+        }
         $authorsModel->where('id', $id)->delete();
 
         return $this->response->redirect(site_url('/authors'));

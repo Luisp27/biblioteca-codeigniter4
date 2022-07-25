@@ -114,8 +114,6 @@ class Books extends BaseController
             ];
             $booksAuthor->insert($data);
         }
-
-        return $this->response->redirect(site_url('home/index'));
     }
 
     public function delete($id)

@@ -40,8 +40,10 @@
         $('#create_form').on('submit', function(e) {
             e.preventDefault();
 
-            if ($("#create_form").length > 0) {
-                $("#create_form").validate({
+            var form = $("#create_form");
+
+            if (form.length > 0) {
+                form.validate({
                     rules: {
                         name: {
                             required: true,
@@ -73,31 +75,31 @@
                         }
                     },
                 })
-            }
 
-            var authors = $('#authors').val();
-            authors.join(',');
+                if (form.valid()) {
+                    var authors = $('#authors').val();
+                    authors.join(',');
 
-            // ajax post
-            $.ajax({
-                type: 'POST',
-                url: '<?= base_url('books/store') ?>',
-                data: {
-                    name: $('#name').val(),
-                    publication_date: $('#publication_date').val(),
-                    edition: $('#edition').val(),
-                    authors
-                },
-                success: function(data) {
-                    if (data.success) {
-                        window.location.href = '<?= site_url('') ?>';
-                    }
-                    console.log('success');
-                },
-                error: function(data) {
-                    console.log('error');
+                    $.ajax({
+                        type: 'POST',
+                        url: '<?= base_url('books/store') ?>',
+                        data: {
+                            name: $('#name').val(),
+                            publication_date: $('#publication_date').val(),
+                            edition: $('#edition').val(),
+                            authors
+                        },
+                        success: function(data) {
+                            window.location.href = '<?= site_url('') ?>';
+                            console.log('success');
+                        },
+                        error: function(data) {
+                            console.log('error');
+                        }
+                    });
                 }
-            });
+
+            }
         });
 
 
